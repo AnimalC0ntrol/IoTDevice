@@ -1,6 +1,7 @@
 import machine
 import os
 import pycom
+import _thread
 from time import sleep
 from startiot import Startiot
 from common import *
@@ -35,7 +36,6 @@ class AnimalAlert():
 	def send(self, data):
 		self.iot.send(data)
 
-
 	def run(self):
 		# main loop
 		while True:
@@ -43,8 +43,8 @@ class AnimalAlert():
 			print(val)
 
 			if val == 1:
-				self.led.blink(1, 10)
-				(m_lat, m_lng) = self.get_gps()
+				_thread.start_new_thread(self.led.blink, (1, 10))
+				(m_lat, m_lng) = self.get_gps(8)
 				data = "{},{},{}".format(val, m_lat, m_lng)
 				print(data)
 				self.send
