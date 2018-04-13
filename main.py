@@ -9,6 +9,7 @@ from L76GNSS import L76GNSS
 from LIS2HH12 import LIS2HH12
 from pytrack import Pytrack
 from pir import Longpir
+from led import Led
 
 
 class AnimalAlert():
@@ -19,22 +20,36 @@ class AnimalAlert():
 		py = Pytrack()
 		self.gps = L76GNSS(py, timeout = 30)
 		self.acc = LIS2HH12(py)
-		#pir = Pin('P11',mode=Pin.IN,pull=Pin.PULL_DOWN)
-		self.longpir = Longpir("P11")
+
+		self.centerpir = Longpir("P11")
+		self.led = Led("P10")
+		
 		pycom.heartbeat(False) # disable the blue blinking
+		#self.sidepir = Shortpir("P11", "P10") 	
+
+	def get_gps(self):
+		(m_lat, m_lng) = self.gps.coordinates()
+		return(m_lat, m_lng)
+
+
+	def send(self, data):
+		self.iot.send(data)
+
 
 	def run(self):
 		# main loop
 		while True:
-			val = self.longpir.check_sensor()
+			val = self.centerpir.check_sensor()
 			print(val)
 
 			if val == 1:
-				(m_lat, m_lng) = self.gps.coordinates()
+				self.led.blink(1, 10)
+				(m_lat, m_lng) = self.get_gps()
 				data = "{},{},{}".format(val, m_lat, m_lng)
 				print(data)
-				self.iot.send(data)
-				sleep(10)
+				self.send
+
+			self.led.stop
 			sleep(1)
 
 if __name__=="__main__":
