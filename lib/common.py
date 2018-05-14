@@ -1,12 +1,13 @@
-# RGB ligths 
+# RUN
+SLEEPTIME_MAIN = 1
 
-colors = {
-    "black": 0x000000,
-    "red": 0xff0000,
-    "orange": 0xff8000, 
-    "yellow": 0xffff00,
-    "green": 0x00ff00,
-    "blue": 0x0000ff,
-    "purple": 0x70ff00,
-    "white": 0xffffff
-}
+# UV BASELINE
+BASELINE_MAX = 5
+BASELINE_DIFF = 10000
+
+#GPS
+GPS_NUMCOPIES = 10
+
+# LED
+LED_DELAY = 1
+LED_DURATION = 5 

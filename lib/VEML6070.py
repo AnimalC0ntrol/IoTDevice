@@ -5,7 +5,7 @@ class VEML6070_UV:
         self.i2c = i2c
         self.addr = addr
         self.value = 0
-        self.i2c.writeto(addr, bytes([0x02])) # start continuos 1 Lux readings every 120ms
+        i2c.writeto(self.addr, bytes([0x02])) # start continuos 1 Lux readings every 120ms
 
     def read(self):
         data = self.i2c.readfrom(self.addr, 2)
