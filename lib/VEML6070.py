@@ -9,5 +9,5 @@ class VEML6070_UV:
 
     def read(self):
         data = self.i2c.readfrom(self.addr, 2)
-        self.value = (((data[0] << 8) + data[1]) * 1200) // 1000
+        self.value = (((data[0] << 8) | data[1]))
         return self.value
