@@ -64,15 +64,15 @@ class AnimalAlert():
 		data = "{},{},{}".format(left, center, right)
 		if center == 1: 
 			self.state = STATE_WARNING
+			self.led.blink(LED_DELAY, LED_DURATION)
 			self.iot.send(data)
 			print("sent to startIoT")
-			self.led.blink(LED_DELAY, LED_DURATION)
 
 		elif left == 1 or right == 1:
 			self.state = STATE_ALERT
+			self.led.blink(LED_DELAY, LED_DURATION)
 			self.iot.send(data)
 			print("sent to startIoT")
-			self.led.blink(LED_DELAY, LED_DURATION)
 
 		#(lat, lng) = self.get_gps()
 		#data = "{},{},{},{},{},{}".format(left, center, right, lat, lng, uv)
